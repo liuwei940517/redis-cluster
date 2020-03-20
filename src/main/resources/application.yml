@@ -1,0 +1,41 @@
+server:
+  port: 8888
+spring:
+  redis:
+    cluster:
+      nodes:
+        -192.168.136.129:7001
+        -192.168.136.130:7002
+        -192.168.136.131:7003
+        -192.168.136.129:7004
+        -192.168.136.130:7005
+        -192.168.136.131:7006
+    lettuce:
+      pool:
+        max-active: 8 #连接池最大连接数（使用负值表示没有限制） 默认8
+        max-idle: 8   #连接池中的最大空闲连接 默认8
+        min-idle: 0   #连接池中的最小空闲连接 默认0
+        max-wait: -1  #连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+    timeout: 2000     #连接超时时间（毫秒）
+  datasource:
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/redis?serverTimezone=GMT%2B8
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.example.redis.entity
+
+#自定义cache
+cache:
+  redis:
+    5m: PT5M
+    eternal: PT0S
+    1h: PT1H
+
+
+logging:
+  file: redis-cluster.log
+  level:
+    com.example.redis.dao: debug
